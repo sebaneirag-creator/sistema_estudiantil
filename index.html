@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Estudiantes - Portal Empresarial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="navbar-content">
+            <h1>Sistema de Gestión Académica</h1>
+            <span class="user-badge">Módulo de Registro</span>
+        </div>
+    </header>
+
+    <main class="app-container">
+        <div class="layout">
+
+            <section class="card form-card">
+                <div class="card-header">
+                    <h2>Registrar Estudiante</h2>
+                    <p>Ingrese los datos para actualizar la nómina académica.</p>
+                </div>
+
+                <form id="formEstudiante" onsubmit="event.preventDefault(); agregarEstudiante();" class="form-grid">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" placeholder="Enzo" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" id="apellido" placeholder="Martínez" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="promedio">Promedio Final</label>
+                        <input type="number" id="promedio" min="1.0" max="7.0" step="0.1" placeholder="6.5" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Agregar estudiante
+                    </button>
+                </form>
+            </section>
+
+            <section class="card table-card">
+                <div class="card-header">
+                    <h2>Listado de Estudiantes</h2>
+                    <p>Registro actualizado de rendimiento y estado final del estudiante.</p>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Promedio</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaEstudiantes">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</body>
+
+</html>
