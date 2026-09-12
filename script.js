@@ -16,7 +16,12 @@ function renderizarTabla() {
     estudiantes.forEach(function (estudiante) {
         const fila = document.createElement("tr");
 
-        const claseBadge = estudiante.estado === "Aprobado" ? "aprobado" : "reprobado";
+        let claseBadge = "reprobado";
+        if (estudiante.estado === "Aprobado") {
+            claseBadge = "aprobado";
+        } else if (estudiante.estado === "Reprobado por inasitencia") {
+            claseBadge = "reprobadoInasistencia";
+        }
 
         fila.innerHTML = `
             <td>${estudiante.nombre}</td>
@@ -25,6 +30,7 @@ function renderizarTabla() {
             <td>${estudiante.segundaNota}</td>
             <td>${estudiante.terceraNota}</td>
             <td>${estudiante.promedio}</td>
+            <td>${estudiante.asistencia}</td>
             <td><span class="${claseBadge}">${estudiante.estado}</span></td>
         `;
 
@@ -45,13 +51,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const primeraNota = document.getElementById("primeraNota").valueAsNumber
         const segundaNota = document.getElementById("segundaNota").valueAsNumber
         const terceraNota = document.getElementById("terceraNota").valueAsNumber
+        const asistencia = document.getElementById("asistencia").valueAsNumber
 
         let estado = "Por definir"
 
         const promedio = (primeraNota*0.3) + (segundaNota*0.4) + (terceraNota*0.3)
 
 
-        if (!nombre || !apellido || !primeraNota || !segundaNota || !terceraNota){
+        if (!nombre || !apellido || !primeraNota || !segundaNota || !terceraNota || !asistencia){
             return;
         }
         if (primeraNota < 1 || primeraNota > 7){
@@ -63,11 +70,18 @@ document.addEventListener("DOMContentLoaded", function () {
         if (terceraNota < 1 || terceraNota > 7){
             return
         }
-        if (promedio < 4){
-            estado = "Reprobado"
-        }else{
+
+        if (asistencia < 60){
+            estado = "Reprobado por inasitencia"
+        }else if (asistencia >= 60 && asistencia < 70 && promedio >= 5){
             estado = "Aprobado"
+        }else if (asistencia >= 70 && promedio >= 4){
+            estado = "Aprobado"
+        }else{
+            estado = "Reprobado"
         }
+
+
 
         const nuevoEstudiante = {
             id: crypto.randomUUID(),
@@ -77,6 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
             segundaNota: segundaNota,
             terceraNota, terceraNota,
             promedio: promedio.toFixed(1),
+            asistencia: asistencia,
             estado: estado
         }
 
