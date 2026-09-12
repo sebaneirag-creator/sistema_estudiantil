@@ -21,6 +21,9 @@ function renderizarTabla() {
         fila.innerHTML = `
             <td>${estudiante.nombre}</td>
             <td>${estudiante.apellido}</td>
+            <td>${estudiante.primeraNota}</td>
+            <td>${estudiante.segundaNota}</td>
+            <td>${estudiante.terceraNota}</td>
             <td>${estudiante.promedio}</td>
             <td><span class="${claseBadge}">${estudiante.estado}</span></td>
         `;
@@ -39,15 +42,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const nombre = document.getElementById("nombre").value
         const apellido = document.getElementById("apellido").value
-        const promedio = document.getElementById("promedio").valueAsNumber
+        const primeraNota = document.getElementById("primeraNota").valueAsNumber
+        const segundaNota = document.getElementById("segundaNota").valueAsNumber
+        const terceraNota = document.getElementById("terceraNota").valueAsNumber
 
         let estado = "Por definir"
 
+        const promedio = (primeraNota*0.3) + (segundaNota*0.4) + (terceraNota*0.3)
 
-        if (!nombre || !apellido || !promedio){
+
+        if (!nombre || !apellido || !primeraNota || !segundaNota || !terceraNota){
             return;
         }
-        if (promedio < 1 || promedio > 7){
+        if (primeraNota < 1 || primeraNota > 7){
+            return
+        }
+        if (segundaNota < 1 || segundaNota > 7){
+            return
+        }
+        if (terceraNota < 1 || terceraNota > 7){
             return
         }
         if (promedio < 4){
@@ -60,7 +73,10 @@ document.addEventListener("DOMContentLoaded", function () {
             id: crypto.randomUUID(),
             nombre: nombre,
             apellido: apellido,
-            promedio: promedio,
+            primeraNota: primeraNota,
+            segundaNota: segundaNota,
+            terceraNota, terceraNota,
+            promedio: promedio.toFixed(1),
             estado: estado
         }
 
